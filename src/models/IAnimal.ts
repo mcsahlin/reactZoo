@@ -10,5 +10,3 @@ export interface IAnimal {
 	isFed: boolean;
 	lastFed: string;
 }
-
-export interface IAnimalResponse {}
