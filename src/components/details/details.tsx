@@ -30,19 +30,6 @@ export function details(props: IPresentationProps) {
 	};
 	const { idParam } = useParams();
 
-	const {
-		id,
-		name,
-		latinName,
-		yearOfBirth,
-		shortDescription,
-		longDescription,
-		imageUrl,
-		medicine,
-		isFed,
-		lastFed,
-	} = props;
-
 	useEffect(() => {
 		if (!loading) return;
 		setAnimals(getLStorage());
