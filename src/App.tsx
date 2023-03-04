@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import Card from './components/card/Card';
+import { IAnimal } from './models/IAnimal';
+import { setLStorage, getLStorage, apiCall } from './services/initData';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface IAnimalProps {
+	img: string;
+	name: string;
+	short: string;
 }
+
+const App = () => {
+	const [animals, setAnimals] = useState<IAnimal[]>([]);
+	const [initialized, setInitialized] = useState<boolean>(false);
+
+	useEffect(() => {
+		if (animals.length > 0) return;
+		const setData = async () => {
+			setLStorage(await apiCall());
+		};
+		setData().then(() => {
+			setInitialized(true);
+		});
+	}, []);
+
+	useEffect(() => {
+		setAnimals(getLStorage);
+	}, [initialized]);
+
+	return (
+		<main className='cards'>
+			{animals.map((animal) => {
+				return (
+					<Card
+						key={animal.id}
+						img={animal.imageUrl}
+						name={animal.name}
+						short={animal.shortDescription}
+					/>
+				);
+			})}
+		</main>
+	);
+};
 
 export default App;
