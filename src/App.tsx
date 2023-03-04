@@ -1,14 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
-import Card from './components/card/Card';
+import { useEffect, useState } from 'react';
+import './App.scss';
 import { IAnimal } from './models/IAnimal';
 import { setLStorage, getLStorage, apiCall } from './services/initData';
-
-interface IAnimalProps {
-	img: string;
-	name: string;
-	short: string;
-}
+import { Outlet } from 'react-router-dom';
 
 const App = () => {
 	const [animals, setAnimals] = useState<IAnimal[]>([]);
@@ -25,21 +19,12 @@ const App = () => {
 	}, []);
 
 	useEffect(() => {
-		setAnimals(getLStorage);
+		setAnimals(getLStorage());
 	}, [initialized]);
 
 	return (
-		<main className='cards'>
-			{animals.map((animal) => {
-				return (
-					<Card
-						key={animal.id}
-						img={animal.imageUrl}
-						name={animal.name}
-						short={animal.shortDescription}
-					/>
-				);
-			})}
+		<main>
+			<Outlet />
 		</main>
 	);
 };
