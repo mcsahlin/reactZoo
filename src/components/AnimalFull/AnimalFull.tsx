@@ -1,4 +1,4 @@
-import { TimeLike } from 'fs';
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { IAnimal } from '../../models/IAnimal';
@@ -11,7 +11,7 @@ interface TimerState {
 	isLessThan50: boolean;
 }
 
-export function details(props: IPresentationProps) {
+export const AnimalPage = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [animals, setAnimals] = useState<IAnimal[]>([]);
 	const [animal, setAnimal] = useState<IAnimal>();
@@ -64,7 +64,7 @@ export function details(props: IPresentationProps) {
 	}, [timer]);
 
 	return (
-		<div className='anipage'>
+		<section className='page--animal'>
 			<h2>{animal?.name}</h2>
 			<p>{animal?.yearOfBirth}</p>
 			<img
@@ -85,8 +85,6 @@ export function details(props: IPresentationProps) {
 					}}
 				></button>
 			</div>
-		</div>
+		</section>
 	);
-}
-
-export default details;
+};
