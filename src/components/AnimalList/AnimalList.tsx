@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { IAnimal } from '../../models/IAnimal';
 import { apiCall, getLStorage, setLStorage } from '../../services/initData';
 import Card from '../../components/AnimalCard/AnimalCard';
+import './AnimalList.scss';
+import monkey from './../../assets/img/monkey.png';
 
 export const AnimalList = () => {
-	const [animals, setAnimals] = useState<IAnimal[]>([]);
+	const [animals, setAnimals] = useState<IAnimal[]>(getLStorage());
 	const [initialized, setInitialized] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -24,14 +26,29 @@ export const AnimalList = () => {
 
 	const html = animals.map((animal) => {
 		return (
-			<Link
+			// <Link
+			// 	key={animal.id}
+			// 	to={`/Animal/${animal.id}`}
+			// >
+			<Card
 				key={animal.id}
-				to={`/Animal/${animal.id}`}
-			>
-				<Card animal={animal} />
-			</Link>
+				animal={animal}
+			/>
+			// {/* </Link> */}
 		);
 	});
 
-	return <>{html}</>;
+	return (
+		<div className='AnimalList'>
+			<aside className='AnimalList__sidebar'>
+				<img src={monkey} />
+			</aside>
+			<section className='AnimalList__cards'>
+				<div className='AnimalList__shelf'>
+					<h1>Welcome</h1>
+				</div>
+				{html}
+			</section>
+		</div>
+	);
 };

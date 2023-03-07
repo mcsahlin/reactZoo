@@ -1,0 +1,69 @@
+@use './../../scss/variables' as v;
+.nav {
+	height: 50px;
+	background-color: v.$secondary_clr_dark;
+	width: 100%;
+	background-color: #f3ba1d;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	text-align: center;
+	-webkit-box-shadow: 16px 10px 42px -1px rgba(0, 0, 0, 0.67);
+	-moz-box-shadow: 16px 10px 42px -1px rgba(0, 0, 0, 0.67);
+	box-shadow: 16px 10px 42px -1px rgba(0, 0, 0, 0.67), inset 0 0 25px #7e57c2;
+	z-index: 2; // Shadow on top of card container
+	&__container {
+		display: flex;
+		justify-content: space-around;
+		flex-direction: column;
+		align-items: normal;
+	}
+	&__link {
+		position: absolute;
+		top: 10px;
+		transform: translateX(-370px);
+
+		font-size: 8rem;
+		font-weight: 800;
+		color: white;
+	}
+	&__zoo {
+		position: absolute;
+
+		transform: translateX(150px);
+		font-size: 8rem;
+		margin: 3rem;
+		font-weight: 800;
+		letter-spacing: 0.6rem;
+		margin: 5rem;
+		margin-top: 3.5rem;
+		color: #f3ba1d;
+		span {
+			font-weight: 700;
+			letter-spacing: 0;
+		}
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		&__logo {
+			animation: App-logo-spin infinite 30s linear;
+		}
+	}
+	&__logo {
+		@keyframes App-logo-spin {
+			from {
+				transform: rotate(0deg);
+			}
+			to {
+				transform: rotate(360deg);
+			}
+		}
+		&__logo {
+			width: 30%;
+			margin: 0 auto;
+		}
+		// &__menu {
+		// 	display: flex;
+		// }
+	}
+}

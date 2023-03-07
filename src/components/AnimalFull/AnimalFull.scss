@@ -5,7 +5,7 @@
 .page {
 	display: flex;
 	flex-direction: column;
-	width: 100%;
+	width: 80%;
 	gap: 20px;
 	// padding: 10px;
 }
@@ -23,7 +23,7 @@
 		color: darkolivegreen;
 		font-size: xx-large;
 		span {
-			color: rgb(240, 31, 31);
+			color: rgba(230, 12, 12, 0.568);
 		}
 	}
 	&__year-latin-container {
@@ -37,6 +37,7 @@
 
 	&__img {
 		width: 100%;
+		border: 4px solid black;
 	}
 }
 
@@ -55,15 +56,18 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	gap: 10px;
 	// height: 55px;
 	&__container {
-		border-radius: 10px;
+		background-color: none;
+		// border-radius: 10px;
 		// background-color: v.$secondary_clr_light;
 		display: flex;
 		flex-direction: column;
 		text-align: left;
 		padding: 5px 10px;
 		width: 100%;
+		border: 4px solid black;
 	}
 	&__lastfed,
 	&__medical {
@@ -77,34 +81,37 @@
 		font-style: italic;
 	}
 	&__time--alert {
-		color: red;
+		color: rgb(154, 3, 3);
+		font-weight: 700;
 	}
 }
 .feedAnimal {
-	background-color: rgb(240, 31, 31);
-	border-radius: 10px;
-	border: none;
+	background-color: opacify($color: #000000, $amount: 0.5);
+	// border-radius: 10px;
+	border: 4px solid black;
 	color: white;
 	font-size: 2em;
 	width: 100%;
 	height: 100%;
+	padding: 5px 10px;
+	animation: all 0.5s;
+	transition: all 0.5s;
 	&:hover {
 		cursor: pointer;
 		background-color: green;
+		border-radius: 15px;
+		transition: all 0.5s;
+	}
+	&:active {
+		box-sizing: content-box;
+		background-color: yellow;
+		color: red;
 	}
 	&--disabled {
 		background-color: green;
 		opacity: 0.5;
+		&:hover {
+			cursor: progress;
+		}
 	}
 }
-
-// id: number;
-// name: string;
-// latinName: string;
-// yearOfBirth: number;
-// shortDescription: string;
-// longDescription: string;
-// imageUrl: string;
-// medicine: string;
-// isFed: boolean;
-// lastFed: string;

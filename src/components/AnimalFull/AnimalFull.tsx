@@ -1,140 +1,136 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { shouldProcessLinkClick } from 'react-router-dom/dist/dom';
 import { IAnimal } from '../../models/IAnimal';
 import './AnimalFull.scss';
 import '../../scss/_reset.scss';
-import { time } from 'console';
-import { isClassLike } from 'typescript';
 import { getLStorage, setLStorage } from '../../services/initData';
 
 interface ISelectedAnimal {
-	animal: IAnimal;
-}
-
-interface ISelectedAnimal {
-	animal: IAnimal;
+	list: IAnimal[];
+	selected: IAnimal;
 }
 
 export const AnimalFull = (props: ISelectedAnimal) => {
-	const [animals] = useState<IAnimal[]>(getLStorage());
+	const [animals, setAnimals] = useState<IAnimal[]>(getLStorage());
+	const [animal] = useState<IAnimal>(animals[props.selected.id - 1]);
 	const {
-		name,
-		latinName,
-		yearOfBirth,
-		shortDescription,
-		longDescription,
 		imageUrl,
-		medicine,
 		isFed,
 		lastFed,
-	} = props.animal;
+		longDescription,
+		medicine,
+		name,
+		yearOfBirth,
+		latinName,
+		shortDescription,
+	} = animal;
 	const [loading, setLoading] = useState<boolean>(true); // Loading
+	// Animal dynamic states
 	const [imgSrc, setImgSrc] = useState<string>(imageUrl); // Image source for error handling
 	const [fed, setFed] = useState<boolean>(isFed); // Hunger status
-
+	const [timeFed, setTimeFed] = useState<string>(lastFed);
 	// Time
 	const [threeHours] = useState<number>(10800); // Three hour mark
 	const [fourHours] = useState<number>(14400); // Four hour mark
 	const [timePassed, setTimePassed] = useState<number>(0); // Time passed since last feed
-	const [currentTime] = useState<Date>(new Date()); // Current time
+	const [currentTime, setCurrentTime] = useState<Date>(new Date()); // Current time
 	const [timeLimit] = useState<Date>(
 		new Date(currentTime.getTime() + 4 * 60 * 60 * 1000)
 	); // Sets 4 hours from current time
-	const [feedTime, setFeedTime] = useState<string>(lastFed);
 
 	// Alert
-	const [alert, setAlert] = useState<boolean>(false);
+	const [alert, setAlert] = useState<boolean>(fed && false);
 
 	// btn
 	const [btnDisabled, setBtnDisabled] = useState<boolean>(false);
-	const [btnText] = useState<string>(btnDisabled ? 'Matad' : 'Mata Djur');
-	const [btnClass] = useState<string>(
+	const [btnText, setBtnText] = useState<string>(
+		btnDisabled ? 'Matad' : 'Mata Djur'
+	);
+	const [btnClass, setBtnClass] = useState<string>(
 		btnDisabled ? 'feedAnimal feedAnimal--disabled' : 'feedAnimal'
 	);
+	const [refresh, setRefresh] = useState<boolean>(false);
+	const [update, setUpdate] = useState<boolean>(false);
 
-	const [hungerString] = useState<string>(fed ? 'Hungrig!' : '');
-	// const btnText = btnDisabled ? 'Matad' : 'Mata Djur';
-	// const btnClassName = btnDisabled
-	// 	? 'feedAnimal feedAnimal--disabled'
-	// 	: 'feedAnimal';
+	const [hungerString] = useState<string>(!fed ? 'Hungrig!' : '');
+
 	const handleImgError = () => {
 		setImgSrc('https://cdn.siasat.com/wp-content/uploads/2019/10/Missing.jpg');
 	};
-	// const hungerString = fed ? 'Hungrig!' : '';
-	// console.log(feedTime?.getTime().toFixed);
-	// Datum
 
 	useEffect(() => {
-		if (timePassed >= threeHours) {
-			setBtnDisabled(false);
-			setFed(true);
-		}
-		if (timePassed >= fourHours) {
-			setAlert(true);
-		}
-	});
+		if (!loading) return;
+		startCount();
+		console.log('test');
+		setLoading(false);
+	}, []);
 
 	//#region TIMER
 	const startCount = () => {
 		setInterval(() => {
-			setTimePassed((lastCheck) => lastCheck++);
+			setTimePassed((lastCheck) => lastCheck + 1);
 		}, 1000);
 	};
-	// If three / four hours has passed: set fed / notify
-	useEffect(() => {
-		timePassed <= threeHours && setFed(true);
-		timePassed <= fourHours && setAlert(true);
-	});
 
-	useEffect(() => {
-		setBtnDisabled(false);
-	}, [alert]);
-
+	const updateBtn = () => {
+		setBtnDisabled(true);
+		setBtnClass('feedAnimal feedAnimal--disabled');
+		setBtnText('Matad');
+	};
 	// Feed button
 	const handleClick = (e: React.MouseEvent) => {
 		e.preventDefault();
+		updateBtn();
 		const updateAnimal = () => {
-			setFeedTime(new Date().toString());
-			setFed(true);
-			const index = animals.findIndex(
-				(ani) => ani.id === props.animal.id
-			) as number;
+			const newTime = new Date().toISOString();
+			const index = animals.findIndex((ani) => ani === animal) as number;
 			const copy = { ...animals[index] };
-			copy.lastFed = feedTime;
-			copy.isFed = fed;
+			copy.lastFed = newTime;
+			copy.isFed = true;
 			animals[index] = copy;
 			setLStorage(animals);
+			setAnimals(getLStorage());
 		};
 		updateAnimal();
-		setTimePassed(0);
-		setBtnDisabled(true);
-		console.log('Clicked');
-		console.log(timePassed);
+		setRefresh(!refresh);
+		setUpdate(true);
 	};
 
-	// Loading: Initialize
 	useEffect(() => {
-		if (!loading) return;
-		startCount();
-		// setFeedTime(initRandomFeedTime());
+		setFed(true);
+		setTimeFed(new Date().toISOString().toString());
+		setTimePassed(0);
+		setAlert(false);
+		const updateStorage = () => {
+			const temp = [...animals];
+			const index = temp.findIndex((animal) => props.selected.id === animal.id);
+			temp[index].lastFed = timeFed;
+			temp[index].isFed = fed;
+			setLStorage(temp);
+			setLoading(true);
+		};
+		updateStorage();
+		return setUpdate(false);
+	}, [update]);
 
-		// const initRandomHunger = () => {
-		// 	let rNum: number = Math.floor(Math.random() + 100);
-		// 	rNum <= rNum / 2 ? setFed(true) : setFed(false);
-		// };
-		// initRandomHunger();
-		setLoading(false);
-	}, []);
+	// Loading: Initialize
 
 	//
+
+	useEffect(() => {
+		if (loading) {
+			setAnimals(getLStorage());
+			isFed && updateBtn();
+		}
+		return setLoading(false);
+	}, [loading]);
 
 	return (
 		<section className='page page--animal'>
 			<div className='banner'>
 				<h1 className='banner__name'>
 					{name}
-					<span className='alert'>{hungerString}</span>
+					{!refresh && <span className='alert'>{hungerString}</span>}
 				</h1>
 
 				<div className='banner__year-latin-container'>
@@ -152,16 +148,6 @@ export const AnimalFull = (props: ISelectedAnimal) => {
 				<em className='imageContainer__caption'>{shortDescription}</em>
 			</div>
 			<div className='status'>
-				<button
-					className={btnClass}
-					type='button'
-					onClick={(e) => {
-						handleClick(e);
-					}}
-					disabled={btnDisabled}
-				>
-					{btnText}
-				</button>
 				<div className='status__container'>
 					<span className='status__lastfed'>
 						Matad:
@@ -171,17 +157,20 @@ export const AnimalFull = (props: ISelectedAnimal) => {
 						Medicin: <span className='status__medicine'>{medicine}</span>
 					</span>
 				</div>
+				<button
+					className={btnClass}
+					type='button'
+					onClick={(e) => handleClick(e)}
+					disabled={btnDisabled}
+				>
+					{btnText}
+				</button>
 			</div>
 
 			<article className='info'>
 				<h2 className='info__header'>Beskrivning</h2>
 				<p className='info__description'>{longDescription}</p>
 			</article>
-			<div className='page__feed'>
-				<span className='status status--good status--ok status--bad'>
-					{hungerString}
-				</span>
-			</div>
 		</section>
 	);
 };
