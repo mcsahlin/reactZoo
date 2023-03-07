@@ -1,32 +1,34 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { IAnimal } from '../../models/IAnimal';
+import './AnimalCard.scss';
 
 interface IAnimalProps {
 	animal: IAnimal;
 }
 
 export default function Card(props: IAnimalProps) {
-	const { id, imageUrl, name, shortDescription } = props.animal;
-	const route = useNavigate();
-	const handleClick = (e: MouseEvent) => {
-		route(`/details/${id}`);
-	};
+	const { name, shortDescription, lastFed } = props.animal;
+	const [loading, setLoading] = useState<boolean>(true);
+	const [currentTime] = useState<Date>(new Date());
+	const [feedTime] = useState<string>(lastFed);
+
+	const parseTime = () => {};
+
+	useState(() => {
+		if (loading) return;
+	});
+	// const alert =
+
 	return (
-		<>
-			<Link to={`/details/${id}`}>
-				<div
-					className='card'
-					onClick={(e) => handleClick(e)}
-				>
-					<img
-						className='card__img'
-						src={imageUrl}
-					/>
-					<h1 className='card__name'>{name}</h1>
-					<p className='card__short'>{shortDescription}</p>
-				</div>
-			</Link>
-		</>
+		<article className='card'>
+			<div className='info'>
+				<h1 className='info__name'>
+					{name}
+					<span>alert</span>
+				</h1>
+				<p className='info__short'>{shortDescription}</p>
+			</div>
+		</article>
 	);
 }
