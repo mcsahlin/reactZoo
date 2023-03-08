@@ -45,7 +45,7 @@ export const AnimalList = () => {
 			</aside>
 			<section className='AnimalList__cards'>
 				<div className='AnimalList__shelf'>
-					<h1>Welcome</h1>
+					<h1>Zoo</h1>
 				</div>
 				{html}
 			</section>
