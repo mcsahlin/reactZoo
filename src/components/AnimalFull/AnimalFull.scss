@@ -1,26 +1,22 @@
 @use '../../scss/variables' as v;
 @use '../../scss/mixins' as m;
 @import '../../scss/reset';
-
 .page {
 	display: flex;
 	flex-direction: column;
 	width: 80%;
 	gap: 20px;
-	// padding: 10px;
 }
-
 .banner {
 	display: flex;
 	flex-direction: column;
-	// height: 40px;
+	margin-top: 100px;
 	width: 100%;
 	&__name {
 		display: flex;
 		justify-content: space-between;
 		text-align: left;
 		border-bottom: 5px solid v.$secondary_clr_dark;
-		color: darkolivegreen;
 		font-size: xx-large;
 		span {
 			color: rgba(230, 12, 12, 0.568);
@@ -31,37 +27,29 @@
 		justify-content: space-between;
 	}
 }
-
 .imageContainer {
 	width: 100%;
-
 	&__img {
 		width: 100%;
 		border: 4px solid black;
 	}
 }
-
 .info {
 	&__header {
 		text-align: left;
-		color: darkolivegreen;
 		border-bottom: 3px solid v.$secondary_clr_dark;
 	}
 	&__description {
 		text-align: justify;
 	}
 }
-
 .status {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	gap: 10px;
-	// height: 55px;
 	&__container {
 		background-color: none;
-		// border-radius: 10px;
-		// background-color: v.$secondary_clr_light;
 		display: flex;
 		flex-direction: column;
 		text-align: left;
@@ -87,7 +75,6 @@
 }
 .feedAnimal {
 	background-color: opacify($color: #000000, $amount: 0.5);
-	// border-radius: 10px;
 	border: 4px solid black;
 	color: white;
 	font-size: 2em;

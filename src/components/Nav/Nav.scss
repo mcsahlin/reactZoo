@@ -20,22 +20,16 @@ header {
 		width: 100%;
 		display: flex;
 		justify-content: left;
-		// flex-direction: column;
 		margin-left: 10px;
 		align-items: center;
 	}
 	&__link {
-		// position: absolute;
-		// top: 10px;
-		// transform: translateX(-370px);
 		text-align: left;
 		font-size: 2rem;
 		font-weight: 800;
-		// color: white;
 	}
 	&__zoo {
 		position: absolute;
-
 		transform: translateX(150px);
 		font-size: 8rem;
 		margin: 3rem;
@@ -50,7 +44,6 @@ header {
 		}
 	}
 	&__logo {
-		position: absolute;
 		width: 7%;
 		@media (prefers-reduced-motion: no-preference) {
 			&--home {
