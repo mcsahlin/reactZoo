@@ -1,10 +1,8 @@
-import { MouseEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { IAnimal } from '../../models/IAnimal';
-import { getLStorage } from '../../services/initData';
+import { getStorage } from '../../services/storage/localStorage';
 import './AnimalCard.scss';
-import info from './../../assets/img/info.svg';
-import monkey from './../../assets/img/monkey.png';
 
 interface IAnimalProps {
 	animal: IAnimal;
@@ -15,7 +13,7 @@ export default function Card(props: IAnimalProps) {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [currentTime] = useState<Date>(new Date());
 	const [feedTime] = useState<string>(lastFed);
-	const [animals, setAnimals] = useState<IAnimal[]>(getLStorage());
+	const [animals, setAnimals] = useState<IAnimal[]>(getStorage());
 	const imgPath = 'srcassetsimginfo.svg';
 	const parseTime = () => {};
 
@@ -33,10 +31,7 @@ export default function Card(props: IAnimalProps) {
 					/> */}
 
 				<div className='info'>
-					<Link
-						key={props.animal.id}
-						to={`/Animal/${props.animal.id}`}
-					>
+					<Link key={props.animal.id} to={`/Animal/${props.animal.id}`}>
 						<h1 className='info__name'>
 							{name}
 							<span>alert</span>

@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { IAnimal } from '../../models/IAnimal';
-import { apiCall, getLStorage, setLStorage } from '../../services/initData';
+import { apiCall } from '../../services/api/apiCall';
+import { getStorage, setStorage } from '../../services/storage/localStorage';
 import Card from '../../components/AnimalCard/AnimalCard';
 import './AnimalList.scss';
 import monkey from './../../assets/img/monkey.png';
 
 export const AnimalList = () => {
-	const [animals, setAnimals] = useState<IAnimal[]>(getLStorage());
+	const [animals, setAnimals] = useState<IAnimal[]>(getStorage());
 	const [initialized, setInitialized] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (animals.length > 0) return;
 		const setData = async () => {
-			setLStorage(await apiCall());
+			setStorage(await apiCall());
 		};
 		setData().then(() => {
 			setInitialized(true);
@@ -21,18 +21,11 @@ export const AnimalList = () => {
 	}, []);
 
 	useEffect(() => {
-		setAnimals(getLStorage());
+		setAnimals(getStorage());
 	}, [initialized]);
 
 	const html = animals.map((animal) => {
-		return (
-			// <Link
-			// 	key={animal.id}
-			// 	to={`/Animal/${animal.id}`}
-			// >
-			<Card key={animal.id} animal={animal} />
-			// {/* </Link> */}
-		);
+		return <Card key={animal.id} animal={animal} />;
 	});
 
 	return (
