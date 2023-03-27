@@ -75,27 +75,28 @@
 			justify-content: space-between;
 			width: 100%;
 			gap: 10px;
+
 			&__container {
 				background-color: none;
-				display: flex;
-				flex-direction: column;
-				text-align: left;
+
 				padding: 5px 10px;
 				width: 100%;
 				border: 4px solid black;
 			}
 			&__lastfed,
-			&__medical {
+			&__medical,
+			&__countdown {
 				display: flex;
 				justify-content: space-between;
 				font-weight: bold;
 			}
 			&__time,
-			&__medicine {
+			&__medicine,
+			&__countdown-time {
 				font-weight: lighter;
 				font-style: italic;
 			}
-			&__time--alert {
+			&__countdown-time {
 				color: rgb(154, 3, 3);
 				font-weight: 700;
 			}

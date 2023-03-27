@@ -11,6 +11,7 @@ interface IAnimalProps {
 export default function Card(props: IAnimalProps) {
 	const { name, shortDescription, lastFed } = props.animal;
 	const [loading, setLoading] = useState<boolean>(true);
+	const [alert, setAlert] = useState<boolean>(false);
 	const [currentTime] = useState<Date>(new Date());
 	const [feedTime] = useState<string>(lastFed);
 	const [animals, setAnimals] = useState<IAnimal[]>(getStorage());
@@ -34,7 +35,7 @@ export default function Card(props: IAnimalProps) {
 					<Link key={props.animal.id} to={`/Animal/${props.animal.id}`}>
 						<h1 className='info__name'>
 							{name}
-							<span>alert</span>
+							{/* <span className='alert'>alert</span> */}
 						</h1>
 					</Link>
 					<p className='info__short'>{shortDescription}</p>

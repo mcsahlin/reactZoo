@@ -50,7 +50,7 @@ export const AnimalFull = (props: ISelectedAnimal) => {
 			const distance = fourHourMark - currTime;
 			const alert = threeHourMark - currTime;
 			if (alert < 0) {
-				//TODO# toggle alert state
+				setAlert(true);
 			}
 			if (distance < 0) {
 				setCountdown('Hungry!');
@@ -69,20 +69,20 @@ export const AnimalFull = (props: ISelectedAnimal) => {
 		setImgSrc('https://cdn.siasat.com/wp-content/uploads/2019/10/Missing.jpg');
 	};
 
-	useEffect(() => {
-		if (!loading) return;
-		// startCount();
-		console.log('test');
-		setLoading(false);
-	}, []);
-
-	//#region TIMER
-	// const startCount = () => {
-	// 	setInterval(() => {
-	// 		setTimePassed((lastCheck) => lastCheck + 1);
-	// 	}, 1000);
-	// };
-
+	const dateFormat = (lastFed: string): string => {
+		const newTime = new Date(lastFed);
+		const time = newTime.toLocaleTimeString([], {
+			hour: '2-digit',
+			minute: '2-digit',
+		});
+		const date = newTime.toLocaleDateString([], {
+			day: '2-digit',
+			month: '2-digit',
+			year: '2-digit',
+		});
+		const timeString: string = `${time} - ${date}`;
+		return timeString;
+	};
 	const updateBtn = () => {
 		setBtnDisabled(true);
 		setBtnClass('feedAnimal feedAnimal--disabled');
@@ -138,10 +138,6 @@ export const AnimalFull = (props: ISelectedAnimal) => {
 		return setUpdate(false);
 	}, [update]);
 
-	// Loading: Initialize
-
-	//
-
 	useEffect(() => {
 		if (loading) {
 			setAnimals(getStorage());
@@ -156,7 +152,7 @@ export const AnimalFull = (props: ISelectedAnimal) => {
 				<div className='banner'>
 					<h1 className='banner__name'>
 						{name}
-						{!refresh && <span className='alert'>{countdown}</span>}
+						{!refresh && <span className='alert'>{alert ? countdown : ''}</span>}
 					</h1>
 					<div className='banner__year-latin-container'>
 						<em className='banner__year'>Född: {yearOfBirth}</em>
@@ -180,7 +176,7 @@ export const AnimalFull = (props: ISelectedAnimal) => {
 						<span className='status__lastfed'>
 							Matad:
 							<span className='status__time status__time--alert'>
-								{feedTimeString ? feedTimeString : lastFed}
+								{feedTimeString ? feedTimeString : dateFormat(lastFed)}
 							</span>
 						</span>
 						<span className='status__countdown'>
