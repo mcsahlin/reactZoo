@@ -1,32 +1,33 @@
 @use './../../scss/variables' as v;
 header {
-	position: relative;
+	width: 100%;
+	position: absolute;
 }
 .nav {
-	position: sticky;
-	top: 0;
 	height: 50px;
 	width: 100%;
-	background-color: #f3ba1d;
+	background-color: black;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	-webkit-box-shadow: 16px 10px 42px -1px rgba(0, 0, 0, 0.67);
-	-moz-box-shadow: 16px 10px 42px -1px rgba(0, 0, 0, 0.67);
-	box-shadow: 16px 10px 42px -1px rgba(0, 0, 0, 0.67), inset 0 0 25px #7e57c2;
-	z-index: 2; // Shadow on top of card container
 	&__container {
 		height: 100%;
 		width: 100%;
 		display: flex;
-		justify-content: left;
-		margin-left: 10px;
+		justify-content: center;
 		align-items: center;
 	}
+	img {
+		height: 40px;
+	}
 	&__link {
+		color: #23c3a1;
 		text-align: left;
 		font-size: 2rem;
 		font-weight: 800;
+		span {
+			color: #f8bb30;
+		}
 	}
 	&__zoo {
 		position: absolute;
@@ -37,7 +38,7 @@ header {
 		letter-spacing: 0.6rem;
 		margin: 5rem;
 		margin-top: 3.5rem;
-		color: #f3ba1d;
+		color: orange;
 		span {
 			font-weight: 700;
 			letter-spacing: 0;
@@ -45,11 +46,7 @@ header {
 	}
 	&__logo {
 		width: 7%;
-		@media (prefers-reduced-motion: no-preference) {
-			&--home {
-				animation: App-logo-spin infinite 30s linear;
-			}
-		}
+
 		&--home {
 			@keyframes App-logo-spin {
 				from {

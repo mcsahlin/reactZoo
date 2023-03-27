@@ -30,23 +30,19 @@ export const AnimalList = () => {
 			// 	key={animal.id}
 			// 	to={`/Animal/${animal.id}`}
 			// >
-			<Card
-				key={animal.id}
-				animal={animal}
-			/>
+			<Card key={animal.id} animal={animal} />
 			// {/* </Link> */}
 		);
 	});
 
 	return (
 		<div className='AnimalList'>
-			<aside className='AnimalList__sidebar'>
-				<img src={monkey} />
-			</aside>
+			{/* <aside className='AnimalList__sidebar'></aside> */}
 			<section className='AnimalList__cards'>
 				<div className='AnimalList__shelf'>
-					<h1>Zoo</h1>
+					<img src={monkey} />
 				</div>
+				<div className='space'></div>
 				{html}
 			</section>
 		</div>

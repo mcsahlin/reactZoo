@@ -18,19 +18,11 @@ export const Nav = () => {
 	return (
 		<nav className='nav'>
 			<nav className='nav__container'>
-				{/* <img
-					className={logoClass}
-					src={monkey}
-					alt='En apa som logotyp'
-				/> */}
 				<ul className='nav__menu'>
 					<li className='nav__menu-item'>
-						<Link
-							to='/'
-							className='nav__link'
-						>
-							TheZoo
-							{/* The<span className='nav__zoo'>Zoo</span> */}
+						<Link to='/' className='nav__link'>
+							The
+							<span>Zoo</span>
 						</Link>
 					</li>
 				</ul>

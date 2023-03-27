@@ -126,51 +126,57 @@ export const AnimalFull = (props: ISelectedAnimal) => {
 	}, [loading]);
 
 	return (
-		<section className='page page--animal'>
-			<div className='banner'>
-				<h1 className='banner__name'>
-					{name}
-					{!refresh && <span className='alert'>{hungerString}</span>}
-				</h1>
-
-				<div className='banner__year-latin-container'>
-					<em className='banner__year'>Född: {yearOfBirth}</em>
-					<em className='banner__latin'>Latin: {latinName}</em>
+		<div className='page'>
+			<section className='container'>
+				<div className='banner'>
+					<h1 className='banner__name'>
+						{name}
+						{!refresh && <span className='alert'>{hungerString}</span>}
+					</h1>
+					<div className='banner__year-latin-container'>
+						<em className='banner__year'>Född: {yearOfBirth}</em>
+						<em className='banner__latin'>Latin: {latinName}</em>
+					</div>
 				</div>
-			</div>
-			<div className='imageContainer'>
-				<img
-					className='imageContainer__img'
-					src={imgSrc}
-					onError={handleImgError}
-					alt={`Bild på ${name}`}
-				/>
-				<em className='imageContainer__caption'>{shortDescription}</em>
-			</div>
-			<div className='status'>
-				<div className='status__container'>
-					<span className='status__lastfed'>
-						Matad:
-						<span className='status__time status__time--alert'> {lastFed}</span>
-					</span>
-					<span className='status__medical'>
-						Medicin: <span className='status__medicine'>{medicine}</span>
-					</span>
-				</div>
-				<button
-					className={btnClass}
-					type='button'
-					onClick={(e) => handleClick(e)}
-					disabled={btnDisabled}
-				>
-					{btnText}
-				</button>
-			</div>
 
-			<article className='info'>
-				<h2 className='info__header'>Beskrivning</h2>
-				<p className='info__description'>{longDescription}</p>
-			</article>
-		</section>
+				{/* <div className='split-container'> */}
+				<div className='imageContainer'>
+					<img
+						className='imageContainer__img'
+						src={imgSrc}
+						onError={handleImgError}
+						alt={`Bild på ${name}`}
+					/>
+					<em className='imageContainer__caption'>{shortDescription}</em>
+				</div>
+				<div className='status'>
+					<div className='status__container'>
+						<span className='status__lastfed'>
+							Matad:
+							<span className='status__time status__time--alert'> {lastFed}</span>
+						</span>
+						<span className='status__medical'>
+							Medicin: <span className='status__medicine'>{medicine}</span>
+						</span>
+					</div>
+					<button
+						className={btnClass}
+						type='button'
+						onClick={(e) => handleClick(e)}
+						disabled={btnDisabled}
+					>
+						{btnText}
+					</button>
+				</div>
+				{/* </div> */}
+
+				<div className='split-container'>
+					<article className='info'>
+						<h2 className='info__header'>Beskrivning</h2>
+						<p className='info__description'>{longDescription}</p>
+					</article>
+				</div>
+			</section>
+		</div>
 	);
 };
